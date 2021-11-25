@@ -6,10 +6,7 @@
 # @Software : PyCharm
 
 import time
-import sys
-sys.path.append('./interface')
-sys.path.append('./db_fixture')
-from HTMLTestRunner import HTMLTestRunner
+from TryTestRunner import HTMLTestRunner
 import unittest
 
 
@@ -20,9 +17,7 @@ def runTest():
     now = time.strftime("%Y-%m-%d %H_%M_%S")
     filename = './reports/' + now + '_result.html'
     with open(filename, 'wb') as fp:
-        runner = HTMLTestRunner(stream=fp,
-                             title='Punball API AutoTest Report',
-                             description='Case Result: ')
+        runner = HTMLTestRunner(stream=fp, title='Punball API AutoTest Report')
         runner.run(discover)
     fp.close()
 
