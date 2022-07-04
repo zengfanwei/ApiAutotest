@@ -38,6 +38,7 @@ class UserData:
         print(url)
         res = self._request("GET", url, data="", headers=Headers)
         resdata = res.json()
+        print(resdata)
         if resdata["code"] != 0:
             raise (Exception("登录弹球后台工具失败！"))
         return resdata
@@ -57,8 +58,19 @@ class UserData:
               "resNum={0}&itemId={1}&otherData={2}".format(str(num), str(itemid), str(level))
         res = self._request("GET", url, data="", headers=Headers)
         resdata = res.json()
+        Headers["Cookie"] = str(res.request.headers["Cookie"])
         if resdata["code"] != 0:
             raise (Exception("给账号添加道具失败！"))
+        return res
+
+    def delete_equipment(self):  # 删除装备
+        logger.info("删除此账号的装备，{}".format(self.gameuid))
+        url = "https://wiki-punball.habby.com/addResource?serverIdx=0&resType=59&resNum=1&itemId=1020001&otherData=1"
+        res = self._request("GET", url, data="", headers=Headers)
+        resdata = res.json()
+        if resdata["code"] != 0:
+            raise (Exception("删除账号装备失败！"))
+        open(self.userdata_path, 'w').close()
         return res
 
     def delete_account(self):  # 删除账号
@@ -81,6 +93,8 @@ class UserData:
 
 
 if __name__ == '__main__':
-    user = UserData(90000138)
+    user = UserData(10618220)
     print(user.signin())
-    user.create_new_uid()
+    # user.create_new_uid()
+    # user.add_prop(1, 3020106, 20)
+    user.delete_equipment()

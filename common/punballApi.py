@@ -207,4 +207,4 @@ class PunballApi:
 if __name__ == '__main__':
     ap = PunballApi()
     print(ap.login())
-    print(ap.shop_info())
+    # print(ap.shop_info())
